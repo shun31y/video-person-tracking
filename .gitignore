@@ -1,1 +1,4 @@
 /openspec/
+/masks/
+__pycache__/
+.venv/
