@@ -4,12 +4,19 @@
 
 ## 準備
 
-Python 3.10 以上、`uv`、CUDA 対応 GPU が必要です。`uv` で仮想環境を作成し、[`--torch-backend auto`](https://docs.astral.sh/uv/guides/integration/pytorch/#automatic-backend-selection) で GPU ドライバーに合う PyTorch と TorchVision を含む依存関係を導入します。初回実行時には Hugging Face から Grounding DINO と SAM 2.1 の重みがダウンロードされます。
+Python 3.10、`uv`、CUDA 対応 GPU が必要です。リポジトリ内で次を実行すると、`.venv` に依存関係が入ります。Linux では PyTorch 2.5.1 の CUDA 12.1 版を使用するため、対応する NVIDIA ドライバーが必要です。初回実行時には Hugging Face から Grounding DINO と SAM 2.1 の重みがダウンロードされます。
+
+```bash
+conda deactivate  # Conda の base 環境が有効な場合
+uv sync --locked
+.venv/bin/python -c "import torch; assert torch.cuda.is_available()"
+```
+
+CUDA 12.1 版がドライバーに合わない場合は、[`--torch-backend auto`](https://docs.astral.sh/uv/guides/integration/pytorch/#automatic-backend-selection) で環境に合う PyTorch を導入できます。この場合、以後 `uv sync` を実行するとロックされた CUDA 12.1 版に戻ります。
 
 ```bash
 uv venv --python 3.10 .venv
 uv pip install --python .venv/bin/python --torch-backend auto -r requirements.txt
-.venv/bin/python -c "import torch; assert torch.cuda.is_available()"
 ```
 
 ## 実行
