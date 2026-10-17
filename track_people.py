@@ -72,7 +72,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--output", type=Path, default=Path("masks"), help="Mask output directory")
     parser.add_argument("--gpus", help="Comma-separated CUDA device indices; defaults to all visible GPUs")
     parser.add_argument("--grounding-model", default="IDEA-Research/grounding-dino-tiny")
-    parser.add_argument("--sam2-model", default="facebook/sam2.1-hiera-large")
+    parser.add_argument("--sam2-model", default="facebook/sam2.1-hiera-tiny")
     parser.add_argument("--box-threshold", type=float, default=0.35)
     parser.add_argument("--text-threshold", type=float, default=0.25)
     parser.add_argument("--nms-threshold", type=float, default=0.5)

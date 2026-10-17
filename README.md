@@ -1,6 +1,6 @@
 # Person tracking for HQ-OpenHumanVid
 
-`part_001.tar.gz` ～ `part_012.tar.gz` の MP4 を順に読み、各動画の先頭フレームを Grounding DINO の `person` プロンプトで検出します。検出された各人物の BBOX を SAM 2.1 に渡し、動画全フレームのマスクを保存します。圧縮アーカイブは動画ごとにストリームで読み、part 全体は展開しません。
+`part_001.tar.gz` ～ `part_012.tar.gz` の MP4 を順に読み、各動画の先頭フレームを Grounding DINO の `person` プロンプトで検出します。検出された各人物の BBOX を SAM 2.1 Tiny に渡し、動画全フレームのマスクを保存します。圧縮アーカイブは動画ごとにストリームで読み、part 全体は展開しません。
 
 ## 準備
 
@@ -32,6 +32,8 @@ uv pip install --python .venv/bin/python --torch-backend auto -r requirements.tx
 ```
 
 複数サーバーでは、例えばサーバー A に `1-4`、B に `5-8`、C に `9-12` を割り当てます。必要に応じて `--gpus 0,1` で使用する GPU を指定できます。`--workers` が GPU 数より多い場合は GPU を共有するため、メモリ使用量に注意してください。処理前の範囲確認には `--dry-run` を使えます。
+
+SAM 2.1 のデフォルトは `facebook/sam2.1-hiera-tiny` です。別のサイズを使う場合は `--sam2-model` で指定します。既存の出力は完了済みとしてスキップされるため、モデルを変えて再処理するときは新しい `--output` を指定してください。
 
 選択した範囲にアーカイブが一つでも欠けている場合は開始前にエラーになります。
 
